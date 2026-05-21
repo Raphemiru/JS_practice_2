@@ -164,6 +164,7 @@ form {
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 100%;
 }
 
 .icon {
@@ -177,14 +178,15 @@ form {
 
 .add-task {
   width: 100%;
-  max-width: 220px;
-  height: 30px;
+  height: 45px;
   padding: 0 12px;
   border-radius: 12px;
   border: 1.5px solid lightgrey;
   outline: none;
   transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
   box-shadow: 0 0 20px -18px;
+  flex: 1;
+  max-width: none;
 }
 .add-task:hover {
   border-width: 2px;
@@ -200,7 +202,7 @@ form {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 30px;
+  height: 45px;
   padding: 0 20px;
   border-radius: 10px;
   border: 0;
