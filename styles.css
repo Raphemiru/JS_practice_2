@@ -154,7 +154,7 @@ main {
   margin: auto;
   padding: 30px;
   border-radius: 1rem;
-  background: #e0e0e0;
+  background: #fffefe;
   box-shadow:
     5px 5px 15px #bebebe,
     -5px -5px 15px #ffffff;
@@ -222,4 +222,22 @@ form {
   box-shadow: rgb(201, 46, 70) 0px 0px 0px 0px;
   transform: translateY(5px);
   transition: 200ms;
+}
+
+.remove-task {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.task-list {
+  list-style: none;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
