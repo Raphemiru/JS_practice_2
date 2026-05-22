@@ -1,5 +1,5 @@
 // ADD TASK INPUT & BUTTON
-const addTaskInpug = document.getElementById("add-task");
+const addTaskInput = document.getElementById("add-taski-input");
 const addTaskButton = document.getElementById("add-task-button");
 
 // TASK LIST
@@ -12,6 +12,7 @@ const removeTask = document.getElementById("remove-task");
 /* addTaskButton button logic:
     addTaskButton.addEventListener("click", (event) => {
         console.log('button clicked')
+        event.preventDefault()
         code
     });
 */
