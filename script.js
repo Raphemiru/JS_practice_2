@@ -2,14 +2,21 @@
 const addTaskInput = document.getElementById("add-task-input");
 const addTaskButton = document.getElementById("add-task-button");
 
-// TASK LIST
-const taskStatus = document.getElementById("task-status");
-const taskCheck = document.getElementById("task-check");
-const taskName = document.getElementById("task-name");
-const removeTask = document.getElementById("remove-task");
-
-// FETCH NEW TASK INPUT
-const addTask = addTaskButton.addEventListener("click", (event) => {
-  console.log("button clicked");
-  console.log(addTaskInput.value);
+// ADD NEW TASK
+addTaskButton.addEventListener("click", () => {
+  // code to create new list using const task
+  //
+  console.log(addTaskInput.value); // checks if the input text gets noticed
 });
+
+/* TASK CODE
+const task = () => {
+    <li> class="task" id="task">
+        <div class="task-check" id="task-check">
+            <img id="task-status" src="" alt="" />
+            <span id="task-name"></span>
+        </div>
+        <button id="remove-task" class="remove-task"></button>
+    </li>
+}
+*/
