@@ -8,3 +8,10 @@ const taskName = document.getElementById("task-name");
 const removeTask = document.getElementById("remove-task");
 
 // FETCH NEW TASK INPUT
+
+/* addTaskButton button logic:
+    addTaskButton.addEventListener("click", (event) => {
+        console.log('button clicked')
+        code
+    });
+*/
