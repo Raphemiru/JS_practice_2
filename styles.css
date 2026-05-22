@@ -180,7 +180,7 @@ form {
   align-self: flex-start;
 }
 
-.add-task {
+.add-task-input {
   width: 100%;
   height: 45px;
   padding: 0 12px;
@@ -192,14 +192,14 @@ form {
   flex: 1;
   max-width: none;
 }
-.add-task:hover {
+.add-task-input:hover {
   border-width: 2px;
   box-shadow: 0 0 20px -17px;
 }
-.add-task:active {
+.add-task-input:active {
   transform: scale(0.95);
 }
-.add-task:focus {
+.add-task-input:focus {
   border: 2px solid grey;
 }
 .add-task-button {
