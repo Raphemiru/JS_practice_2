@@ -31,21 +31,24 @@
       <form>
         <input
           type="text"
-          class="add-task"
+          class="add-task-input"
+          id="add-task-input"
           placeholder="Add your task"
           aria-label="Add task"
         />
-        <button type="submit" class="add-task-button">Add</button>
+        <button type="submit" class="add-task-button" id="add-task-button">
+          Add
+        </button>
       </form>
       <!-- TASKS -->
       <section class="current-tasks" aria-label="Current Tasks">
         <ul class="task-list">
           <li class="task">
             <div class="task-check">
-              <img src="images/unchecked.png" alt="" />
-              <span>task</span>
+              <img id="task-status" src="images/unchecked.png" alt="" />
+              <span id="task-name">task</span>
             </div>
-            <button class="remove-task">x</button>
+            <button id="remove-task" class="remove-task">x</button>
           </li>
         </ul>
       </section>
