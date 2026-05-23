@@ -18,7 +18,7 @@ const addTask = () => {
     const img = document.createElement("img");
     img.id = "task-status";
     img.src = "images/unchecked.png";
-    img.alt = "";
+    img.alt = "unchecked";
     // set img.src = images/unchecked as default
 
     const span = document.createElement("span");
@@ -42,6 +42,24 @@ const addTask = () => {
       removeTask(li);
     });
 
+    // (un)check a task
+    let isChecked = false;
+
+    div.addEventListener("click", () => {
+      isChecked = !isChecked;
+      if (isChecked) {
+        img.src = "images/checked.png";
+        img.alt = "checked";
+        span.style.textDecoration = "line-through";
+        span.style.color = "gray";
+      } else {
+        img.src = "images/unchecked.png";
+        img.alt = "unchecked";
+        span.style.textDecoration = "none";
+        span.style.color = "black";
+      }
+    });
+
     addTaskInput.value = "";
   } else {
     alert("Task Empty");
@@ -50,17 +68,6 @@ const addTask = () => {
 
 const removeTask = (li) => {
   li.remove();
-};
-
-const taskDone = () => {
-  /*
-        if div is pressed then {
-            set img.src = images/checked.png
-        } else {
-            set img.src = images/unchecked.png
-        }
-        
-    */
 };
 
 addTaskButton.addEventListener("click", () => {
