@@ -5,6 +5,8 @@ const addTaskButton = document.getElementById("add-task-button");
 // ADD NEW TASK
 const taskList = document.getElementById("task-list");
 
+console.log(localStorage);
+
 const addTask = () => {
   if (addTaskInput.value !== "") {
     const li = document.createElement("li");
@@ -42,29 +44,43 @@ const addTask = () => {
       removeTask(li);
     });
 
+    // localStorage/Memory
+    const taskName = addTaskInput.value;
+    const stored = localStorage.getItem("tasks");
+    const tasks = stored ? JSON.parse(stored) : [];
+    tasks.push(taskName);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
     // (un)check a task
-    let isChecked = false;
+    const taskCheck = () => {
+      let isChecked = false;
 
-    div.addEventListener("click", () => {
-      isChecked = !isChecked;
-      if (isChecked) {
-        img.src = "images/checked.png";
-        img.alt = "checked";
-        span.style.textDecoration = "line-through";
-        span.style.color = "gray";
-      } else {
-        img.src = "images/unchecked.png";
-        img.alt = "unchecked";
-        span.style.textDecoration = "none";
-        span.style.color = "black";
-      }
-    });
+      div.addEventListener("click", () => {
+        isChecked = !isChecked;
+        if (isChecked) {
+          img.src = "images/checked.png";
+          img.alt = "checked";
+          span.style.textDecoration = "line-through";
+          span.style.color = "gray";
+        } else {
+          img.src = "images/unchecked.png";
+          img.alt = "unchecked";
+          span.style.textDecoration = "none";
+          span.style.color = "black";
+        }
+      });
+    };
 
+    taskCheck();
     addTaskInput.value = "";
   } else {
     alert("Task Empty");
   }
 };
+
+const saveTask = () => {};
+
+const loadTask = () => {};
 
 const removeTask = (li) => {
   li.remove();
