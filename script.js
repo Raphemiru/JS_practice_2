@@ -1,3 +1,5 @@
+localStorage.getItem("task");
+
 // ADD TASK INPUT & BUTTON
 const addTaskInput = document.getElementById("add-task-input");
 const addTaskButton = document.getElementById("add-task-button");
@@ -5,13 +7,11 @@ const addTaskButton = document.getElementById("add-task-button");
 // ADD NEW TASK
 const taskList = document.getElementById("task-list");
 
-console.log(localStorage);
+let isTaskAdd = false;
 
 const addTask = () => {
   if (addTaskInput.value !== "") {
-    const li = document.createElement("li");
-    li.className = "task";
-    li.id = "task";
+    const li = createLi();
 
     const div = document.createElement("div");
     div.className = "task-check";
@@ -45,11 +45,15 @@ const addTask = () => {
     });
 
     // localStorage/Memory
-    const taskName = addTaskInput.value;
-    const stored = localStorage.getItem("tasks");
-    const tasks = stored ? JSON.parse(stored) : [];
-    tasks.push(taskName);
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    const saveTask = () => {
+      if (isTaskAdd === true) {
+        const taskName = addTaskInput.value;
+        const stored = localStorage.getItem("tasks");
+        const tasks = stored ? JSON.parse(stored) : [];
+        tasks.push(taskName);
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+      }
+    };
 
     // (un)check a task
     const taskCheck = () => {
@@ -72,20 +76,41 @@ const addTask = () => {
     };
 
     taskCheck();
+    saveTask();
     addTaskInput.value = "";
   } else {
     alert("Task Empty");
   }
 };
 
-const saveTask = () => {};
+const loadTask = () => {
+  localStorage.getItem("tasks");
 
-const loadTask = () => {};
+  const getTask = localStorage.getItem("tasks");
+  const getTaskArray = JSON.parse(getTask);
+
+  getTaskArray.forEach((task) => {
+    addTaskInput.value = task;
+    isTaskAdd = false;
+    addTask();
+  });
+};
 
 const removeTask = (li) => {
   li.remove();
 };
 
+const createLi = () => {
+  const li = document.createElement("li");
+  li.className = "task";
+  li.id = "task";
+
+  return li;
+};
+
 addTaskButton.addEventListener("click", () => {
+  isTaskAdd = true;
   addTask();
 });
+
+loadTask();
