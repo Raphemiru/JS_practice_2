@@ -1,116 +1,87 @@
-localStorage.getItem("task");
-
-// ADD TASK INPUT & BUTTON
 const addTaskInput = document.getElementById("add-task-input");
 const addTaskButton = document.getElementById("add-task-button");
-
-// ADD NEW TASK
 const taskList = document.getElementById("task-list");
 
-let isTaskAdd = false;
-
 const addTask = () => {
-  if (addTaskInput.value !== "") {
-    const li = createLi();
-
-    const div = document.createElement("div");
-    div.className = "task-check";
-    div.id = "task-check";
-
-    const img = document.createElement("img");
-    img.id = "task-status";
-    img.src = "images/unchecked.png";
-    img.alt = "unchecked";
-    // set img.src = images/unchecked as default
-
-    const span = document.createElement("span");
-    span.id = "task-name";
-    span.textContent = addTaskInput.value;
-
-    const deleteTaskButton = document.createElement("button");
-    deleteTaskButton.type = "button";
-    deleteTaskButton.textContent = "x";
-    deleteTaskButton.id = "remove-task";
-    deleteTaskButton.className = "remove-task";
-
-    div.appendChild(img);
-    div.appendChild(span);
-    li.appendChild(div);
-    li.appendChild(deleteTaskButton);
-    taskList.appendChild(li);
-
-    // deleting a task; "x" button
-    deleteTaskButton.addEventListener("click", () => {
-      removeTask(li);
-    });
-
-    // localStorage/Memory
-    const saveTask = () => {
-      if (isTaskAdd === true) {
-        const taskName = addTaskInput.value;
-        const stored = localStorage.getItem("tasks");
-        const tasks = stored ? JSON.parse(stored) : [];
-        tasks.push(taskName);
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-      }
-    };
-
-    // (un)check a task
-    const taskCheck = () => {
-      let isChecked = false;
-
-      div.addEventListener("click", () => {
-        isChecked = !isChecked;
-        if (isChecked) {
-          img.src = "images/checked.png";
-          img.alt = "checked";
-          span.style.textDecoration = "line-through";
-          span.style.color = "gray";
-        } else {
-          img.src = "images/unchecked.png";
-          img.alt = "unchecked";
-          span.style.textDecoration = "none";
-          span.style.color = "black";
-        }
-      });
-    };
-
-    taskCheck();
-    saveTask();
-    addTaskInput.value = "";
-  } else {
+  if (addTaskInput.value === "") {
     alert("Task Empty");
+    return;
   }
+
+  const stored = localStorage.getItem("tasks");
+  const tasks = stored ? JSON.parse(stored) : [];
+  const taskName = addTaskInput.value;
+  tasks.push(taskName);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+
+  const index = tasks.length - 1;
+  const li = createLi(taskName, index);
+  taskList.appendChild(li);
+
+  addTaskInput.value = "";
 };
 
 const loadTask = () => {
-  localStorage.getItem("tasks");
+  const stored = localStorage.getItem("tasks");
+  const tasks = stored ? JSON.parse(stored) : [];
 
-  const getTask = localStorage.getItem("tasks");
-  const getTaskArray = JSON.parse(getTask);
-
-  getTaskArray.forEach((task) => {
-    addTaskInput.value = task;
-    isTaskAdd = false;
-    addTask();
+  tasks.forEach((taskName, index) => {
+    const li = createLi(taskName, index);
+    taskList.appendChild(li);
   });
 };
 
-const removeTask = (li) => {
-  li.remove();
-};
-
-const createLi = () => {
+const createLi = (taskName, index) => {
   const li = document.createElement("li");
   li.className = "task";
-  li.id = "task";
+  li.dataset.index = index;
+
+  const div = document.createElement("div");
+  div.className = "task-check";
+
+  const img = document.createElement("img");
+  img.src = "images/unchecked.png";
+  img.alt = "unchecked";
+
+  const span = document.createElement("span");
+  span.textContent = taskName;
+
+  const deleteTaskButton = document.createElement("button");
+  deleteTaskButton.type = "button";
+  deleteTaskButton.textContent = "x";
+  deleteTaskButton.className = "remove-task";
+
+  let isChecked = false;
+  div.addEventListener("click", () => {
+    isChecked = !isChecked;
+    img.src = isChecked ? "images/checked.png" : "images/unchecked.png";
+    img.alt = isChecked ? "checked" : "unchecked";
+    span.style.textDecoration = isChecked ? "line-through" : "none";
+    span.style.color = isChecked ? "gray" : "black";
+  });
+
+  deleteTaskButton.addEventListener("click", () => {
+    removeTask(li);
+  });
+
+  div.appendChild(img);
+  div.appendChild(span);
+  li.appendChild(div);
+  li.appendChild(deleteTaskButton);
 
   return li;
 };
 
-addTaskButton.addEventListener("click", () => {
-  isTaskAdd = true;
-  addTask();
-});
+const removeTask = (li) => {
+  const index = li.dataset.index;
+  li.remove();
+
+  const stored = localStorage.getItem("tasks");
+  const tasks = JSON.parse(stored);
+  tasks.splice(Number(index), 1);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
+addTaskButton.addEventListener("click", addTask);
 
 loadTask();
