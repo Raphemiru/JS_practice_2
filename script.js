@@ -15,7 +15,7 @@ const addTask = () => {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 
   const index = tasks.length - 1;
-  const li = createLi(taskName, index);
+  const li = createLi(taskName, index, false);
   taskList.appendChild(li);
 
   addTaskInput.value = "";
@@ -29,14 +29,6 @@ const loadTask = () => {
     const li = createLi(taskState.taskName, index, taskState.status);
     taskList.appendChild(li);
   });
-
-  /* 
-    code to keep img.src the same after every reload 
-
-    maybe by doing:
-
-
-  */
 };
 
 const createLi = (taskName, index, status) => {
@@ -94,6 +86,11 @@ const createLi = (taskName, index, status) => {
 const removeTask = (li) => {
   const index = li.dataset.index;
   li.remove();
+  const getLi = document.querySelectorAll(".task");
+
+  getLi.forEach((item, index) => {
+    item.dataset.index = index;
+  });
 
   const stored = localStorage.getItem("tasks");
   const tasks = JSON.parse(stored);
