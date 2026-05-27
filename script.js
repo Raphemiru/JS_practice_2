@@ -11,7 +11,7 @@ const addTask = () => {
   const stored = localStorage.getItem("tasks");
   const tasks = stored ? JSON.parse(stored) : [];
   const taskName = addTaskInput.value;
-  tasks.push(taskName);
+  tasks.push({ taskName: taskName, status: false });
   localStorage.setItem("tasks", JSON.stringify(tasks));
 
   const index = tasks.length - 1;
@@ -25,13 +25,21 @@ const loadTask = () => {
   const stored = localStorage.getItem("tasks");
   const tasks = stored ? JSON.parse(stored) : [];
 
-  tasks.forEach((taskName, index) => {
-    const li = createLi(taskName, index);
+  tasks.forEach((taskState, index) => {
+    const li = createLi(taskState.taskName, index, taskState.status);
     taskList.appendChild(li);
   });
+
+  /* 
+    code to keep img.src the same after every reload 
+
+    maybe by doing:
+
+
+  */
 };
 
-const createLi = (taskName, index) => {
+const createLi = (taskName, index, status) => {
   const li = document.createElement("li");
   li.className = "task";
   li.dataset.index = index;
@@ -51,13 +59,24 @@ const createLi = (taskName, index) => {
   deleteTaskButton.textContent = "x";
   deleteTaskButton.className = "remove-task";
 
-  let isChecked = false;
-  div.addEventListener("click", () => {
-    isChecked = !isChecked;
+  let isChecked = status;
+  const taskStateHTML = () => {
     img.src = isChecked ? "images/checked.png" : "images/unchecked.png";
     img.alt = isChecked ? "checked" : "unchecked";
     span.style.textDecoration = isChecked ? "line-through" : "none";
     span.style.color = isChecked ? "gray" : "black";
+  };
+  taskStateHTML();
+  div.addEventListener("click", (status) => {
+    isChecked = !isChecked;
+
+    const stored = localStorage.getItem("tasks");
+    const tasks = stored ? JSON.parse(stored) : [];
+    tasks[index].status = isChecked;
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    // maybe make this a function to reuse to keep the same state after reload?
+    taskStateHTML();
   });
 
   deleteTaskButton.addEventListener("click", () => {
